@@ -12,5 +12,6 @@ import java.util.Map;
 @Service
 public interface AccountService extends UserDetailsService {
     ResponAccount register(AccountIn accountIn) ;
+    ResponAccount login(AccountIn accountIn);
 
 }

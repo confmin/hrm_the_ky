@@ -21,4 +21,9 @@ public class AccountController {
     {
         return  new ResponseEntity<ResponAccount>(accountService.register(accountIn), HttpStatus.OK);
     }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody AccountIn accountIn)
+    {
+        return new ResponseEntity<ResponAccount>(accountService.login(accountIn),HttpStatus.OK);
+    }
 }
