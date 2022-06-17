@@ -1,5 +1,6 @@
 package com.example.autherjava.config;
 
+
 import com.example.autherjava.jwt.JwtFilter;
 import com.example.autherjava.service.AccountServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,8 @@ public class SecurityConfig  {
             http.cors().disable();
             http.csrf().disable();
             http.authorizeRequests()
-                    .antMatchers("/api/**","/api/register","/api/login")
+                    .antMatchers("/test").hasRole("hr")
+                    .antMatchers("/register","/login")
                     .permitAll()
                     .anyRequest()
                     .authenticated();

@@ -10,4 +10,5 @@ public class AccountIn {
     private String username ;
     private String email ;
     private String password ;
+    private String authorities ;
 }

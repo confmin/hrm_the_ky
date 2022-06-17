@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("")
 @CrossOrigin(origins = "*",allowedHeaders = "*")
 public class AccountController {
     @Autowired
@@ -25,5 +25,10 @@ public class AccountController {
     public ResponseEntity<?> login(@RequestBody AccountIn accountIn)
     {
         return new ResponseEntity<ResponAccount>(accountService.login(accountIn),HttpStatus.OK);
+    }
+    @GetMapping("/test")
+    public ResponAccount test()
+    {
+        return new ResponAccount(true,"aa",null);
     }
 }

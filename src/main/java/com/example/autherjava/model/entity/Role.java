@@ -2,13 +2,17 @@ package com.example.autherjava.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 
 @Entity
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "roles")
 public class Role {
     @Id
@@ -17,13 +21,11 @@ public class Role {
     @Column
     private String name ;
 
-    @JsonIgnore
 
-    @ManyToMany(mappedBy="roles")
-    private Collection<Account> accounts ;
-    @JsonIgnore
 
-    @ManyToMany
+
+
+    @ManyToMany()
     @JoinTable(name ="roles_permissions", joinColumns = {@JoinColumn(name ="id_role")},
     inverseJoinColumns = {@JoinColumn(name = "id_permission")})
     private Collection<Permission> permissions ;
