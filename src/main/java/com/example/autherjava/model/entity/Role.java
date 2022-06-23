@@ -21,10 +21,6 @@ public class Role {
     @Column
     private String name ;
 
-
-
-
-
     @ManyToMany()
     @JoinTable(name ="roles_permissions", joinColumns = {@JoinColumn(name ="id_role")},
     inverseJoinColumns = {@JoinColumn(name = "id_permission")})
