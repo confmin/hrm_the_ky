@@ -15,6 +15,7 @@ public interface AccountRepository  extends JpaRepository<Account,Integer> {
     Account findByEmail(String email);
     @Query(value = "select password from accounts where email = ?1",nativeQuery = true)
     String findByPwd(String email);
+    Account findAccountByUsername(String username);
 
 
 

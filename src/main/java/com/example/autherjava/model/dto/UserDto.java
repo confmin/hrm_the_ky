@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -18,5 +19,5 @@ public class UserDto {
     private Integer id ;
     private  String name ;
     private Status status ;
-    private Time time ;
+    private LocalDateTime time ;
 }

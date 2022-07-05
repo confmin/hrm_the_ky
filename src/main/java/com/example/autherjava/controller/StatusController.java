@@ -22,8 +22,8 @@ import java.util.Set;
 public class StatusController {
     @Autowired
     private StatusService statusService ;
+    @PreAuthorize("hasPermission(#STATUS,'READ')")
     @GetMapping
-    @PreAuthorize("hasPermission('status','read')")
     public ResponseEntity<List<StatusDto>> get()
     {
         return new ResponseEntity(statusService.get(),HttpStatus.OK);

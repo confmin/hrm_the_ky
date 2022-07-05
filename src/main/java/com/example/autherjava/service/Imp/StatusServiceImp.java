@@ -1,4 +1,4 @@
-package com.example.autherjava.service;
+package com.example.autherjava.service.Imp;
 
 import com.example.autherjava.mapper.StatusMapper;
 import com.example.autherjava.model.dto.StatusDto;
@@ -8,8 +8,7 @@ import com.example.autherjava.repository.StatusRepository;
 import com.example.autherjava.respon.Respon;
 
 
-
-
+import com.example.autherjava.service.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Component
 
-public class StatusServiceImp implements StatusService{
+public class StatusServiceImp implements StatusService {
 @Autowired
     private StatusRepository statusRepository;
 

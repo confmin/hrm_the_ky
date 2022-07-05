@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
@@ -24,8 +26,9 @@ public class User {
     private Integer id ;
     @Column
     private String name ;
-    private Time time ;
+    private LocalDateTime time ;
     @ManyToOne()
     private Status status ;
-
+    @OneToOne()
+    private  Account account ;
 }

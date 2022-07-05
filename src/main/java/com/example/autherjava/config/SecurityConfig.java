@@ -52,7 +52,7 @@ private CustomEvaluatorService permissionEvaluator;
     protected MethodSecurityExpressionHandler createExpressionHandler() {
         DefaultMethodSecurityExpressionHandler expressionHandler =
                 new DefaultMethodSecurityExpressionHandler();
-        expressionHandler.setPermissionEvaluator(permissionEvaluator);
+        expressionHandler.setPermissionEvaluator(new CustomEvaluatorService());
         return expressionHandler;
     }
 
@@ -62,9 +62,7 @@ private CustomEvaluatorService permissionEvaluator;
             http.cors().disable();
             http.csrf().disable();
             http.authorizeRequests()
-                    .antMatchers("/api/status")
-                    .permitAll()
-                    .antMatchers("/register","/login")
+                    .antMatchers("/register","/login","/api/status","/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated();

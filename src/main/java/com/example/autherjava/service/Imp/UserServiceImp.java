@@ -1,4 +1,4 @@
-package com.example.autherjava.service;
+package com.example.autherjava.service.Imp;
 
 import com.example.autherjava.mapper.UserMapper;
 import com.example.autherjava.model.dto.UserDto;
@@ -8,6 +8,7 @@ import com.example.autherjava.model.in.UserIn;
 import com.example.autherjava.repository.StatusRepository;
 import com.example.autherjava.repository.UserRepository;
 import com.example.autherjava.respon.ResponPage;
+import com.example.autherjava.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,13 +17,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 @Component
-public class UserServiceImp implements UserService{
+public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository ;
     @Autowired
@@ -40,9 +42,10 @@ public class UserServiceImp implements UserService{
     @Override
     public ResponPage add(UserIn userIn, Integer limit)  {
         User user = UserMapper.map(userIn);
-        user.setStatus(statusRepository.getById(userIn.getStatus()));
-        user.setTime(Time.valueOf(LocalTime.now()));
-        int countpage = userRepository.countIdPage(statusRepository.getByLevel(userIn.getStatus())) ;
+        Status status = statusRepository.getById(userIn.getStatus());
+        user.setStatus(status);
+        user.setTime(LocalDateTime.now());
+        int countpage = userRepository.countIdPage(statusRepository.getByLevel(status.getLevel())) ;
         int actpage = (int) Math.ceil(countpage/limit);
         System.out.println(countpage+"ccsad");
         System.out.println(limit+"wqeqwe");
@@ -59,7 +62,7 @@ public class UserServiceImp implements UserService{
            user.setStatus(statusRepository.getById(userIn.getStatus()));
            user.setName(userIn.getName());
            user.setStatus(statusRepository.getById(userIn.getStatus()));
-           user.setTime(Time.valueOf(LocalTime.now()));
+           user.setTime(LocalDateTime.now());
        return  userRepository.save(user);
 
     }

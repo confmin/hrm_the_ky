@@ -25,6 +25,8 @@ public class Account {
     private String email ;
 @Column
     private String password ;
+    private String verify_code ;
+    private  boolean enable ;
 
 
 
@@ -32,8 +34,10 @@ public class Account {
 private Collection<Role> roles = new ArrayList<>();
 
 
-@ManyToMany()
+
+    @ManyToMany()
 @JoinTable(name = "accounts_premissions",joinColumns = {@JoinColumn(name = "id_accounts")},
         inverseJoinColumns = {@JoinColumn(name = "id_permissions")})
     private Collection<Permission> permissions ;
 }
+

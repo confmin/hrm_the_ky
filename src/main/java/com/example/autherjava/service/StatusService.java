@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public interface StatusService {
 
-    @PreAuthorize("hasPermission(#hr, 'read')")
+  
     List<StatusDto> get() ;
     Respon add(StatusIn statusIn);
     Respon update(Integer id , StatusIn statusIn) ;
