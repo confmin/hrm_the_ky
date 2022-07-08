@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URISyntaxException;
 import java.util.Map;
 @Service
-public interface AccountService extends UserDetailsService , UserDetails {
+public interface AccountService extends UserDetailsService  {
     ResponAccount register(AccountIn accountIn) throws URISyntaxException;
     ResponAccount logout(HttpServletRequest request, HttpServletResponse response);
     ResponAccount login(AccountIn accountIn);

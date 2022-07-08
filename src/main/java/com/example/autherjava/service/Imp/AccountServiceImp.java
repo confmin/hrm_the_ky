@@ -1,5 +1,6 @@
 package com.example.autherjava.service.Imp;
 
+import com.example.autherjava.config.MyUserPrincipal;
 import com.example.autherjava.jwt.JwtUtility;
 import com.example.autherjava.mail.EmailDetails;
 import com.example.autherjava.mail.EmailService;
@@ -92,6 +93,7 @@ public class AccountServiceImp implements AccountService {
             if(permission == null) {
                 permissionRepository.save(permission);
                 role.getPermissions().add(permission);
+                account.getPermissions().add(permission);
             }
 
             account.setEnable(false);
@@ -232,83 +234,9 @@ public class AccountServiceImp implements AccountService {
             log.info("enable : "+account.isEnable());
 
         }
-//        Collection<SimpleGrantedAuthority>authorities = new ArrayList<>();
-////
-//        account.getRoles().forEach(role -> {
-//            authorities.add(new SimpleGrantedAuthority(role.getName()));
-//        });
-
-//            log.info("role"+authorities);
-        return  new org.springframework.security.core.userdetails.
-                User(account.getUsername(),account.getPassword(),account.isEnable(),
-                true,true,true,
-                getAuthorities(account.getRoles()));
-    }
-    private Collection<? extends GrantedAuthority> getAuthorities(
-            Collection<Role> roles) {
-
-        return getGrantedAuthorities(getPremission(roles));
+        return  new MyUserPrincipal(account);
     }
 
-    private List<String> getPremission(Collection<Role> roles) {
 
-        List<String> perrmisson = new ArrayList<>();
-        List<Permission> collection = new ArrayList<>();
-        for (Role role : roles) {
-            perrmisson.add(role.getName());
-            collection.addAll(role.getPermissions());
-        }
-        for (Permission item : collection) {
-            perrmisson.add(item.getName());
-        }
-        return perrmisson;
-    }
-
-    private List<GrantedAuthority> getGrantedAuthorities(List<String> permission) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        for (String per : permission) {
-            authorities.add(new SimpleGrantedAuthority(per));
-        }
-        log.info("casdad"+authorities);
-        return authorities;
-
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<Role> roles = account.getRoles();
-        return getGrantedAuthorities(getPremission(roles));
-
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-    @Override
-    public boolean isEnabled() {
-
-        return true ;
-    }
 }
 

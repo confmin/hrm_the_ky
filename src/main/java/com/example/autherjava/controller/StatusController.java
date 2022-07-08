@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +23,11 @@ import java.util.Set;
 public class StatusController {
     @Autowired
     private StatusService statusService ;
-    @PreAuthorize("hasPermission(#STATUS,'READ')")
+    @PreAuthorize("hasPermission('read')")
     @GetMapping
     public ResponseEntity<List<StatusDto>> get()
     {
+
         return new ResponseEntity(statusService.get(),HttpStatus.OK);
     }
     @PostMapping

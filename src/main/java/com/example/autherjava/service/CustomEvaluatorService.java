@@ -1,7 +1,4 @@
 package com.example.autherjava.service;
-
-import com.example.autherjava.config.CustomGrantedAuthority;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
@@ -14,28 +11,38 @@ import java.util.List;
 @Service
 public class CustomEvaluatorService implements PermissionEvaluator {
     @Override
-    public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
-        if ((authentication == null) || (targetDomainObject == null) || !(permission instanceof String)) {
+    public boolean hasPermission(
+            Authentication auth, Object targetDomainObject, Object permission) {
+        if ((auth == null) || (targetDomainObject == null) || !(permission instanceof String)){
             return false;
         }
-        return hasPrivilege(authentication, targetDomainObject.toString().toUpperCase(), permission.toString().toUpperCase());
+        String targetType = targetDomainObject.getClass().getSimpleName().toUpperCase();
+        log.info("string"+targetType);
+        log.info("qqqqqqq"+permission);
+        return hasPrivilege(auth, targetType, permission.toString().toUpperCase());
     }
 
     @Override
-    public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
-        if ((authentication == null) || (targetType == null) || !(permission instanceof String)) {
+    public boolean hasPermission(
+            Authentication auth, Serializable targetId, String targetType, Object permission) {
+        if ((auth == null) || (targetType == null) || !(permission instanceof String)) {
             return false;
         }
-        return hasPrivilege(authentication, targetType.toUpperCase(), permission.toString().toUpperCase());
+        return hasPrivilege(auth, targetType.toUpperCase(),
+                permission.toString().toUpperCase());
     }
+
 
     private boolean hasPrivilege(Authentication auth, String targetType, String permission) {
         for (GrantedAuthority grantedAuth : auth.getAuthorities()) {
             if (grantedAuth.getAuthority().startsWith(targetType) &&
                     grantedAuth.getAuthority().contains(permission)) {
+                log.info("ahaha"+  grantedAuth.getAuthority().contains(permission));
+                log.info("uhhhh"+grantedAuth.getAuthority().startsWith(targetType));
                 return true;
             }
         }
+        log.info("co qq ji");
         return false;
     }
 }

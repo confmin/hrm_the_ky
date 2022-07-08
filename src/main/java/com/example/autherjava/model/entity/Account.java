@@ -30,12 +30,12 @@ public class Account {
 
 
 
-@ManyToMany(fetch = FetchType.EAGER)
+@ManyToMany(fetch = FetchType.LAZY)
 private Collection<Role> roles = new ArrayList<>();
 
 
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 @JoinTable(name = "accounts_premissions",joinColumns = {@JoinColumn(name = "id_accounts")},
         inverseJoinColumns = {@JoinColumn(name = "id_permissions")})
     private Collection<Permission> permissions ;

@@ -1,6 +1,7 @@
 package com.example.autherjava.model.entity;
 
 import lombok.Data;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -10,7 +11,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "permissions")
-public class Permission {
+public class Permission  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id ;
