@@ -1,15 +1,11 @@
 package com.example.autherjava.config;
 
 
-import com.example.autherjava.jwt.JwtFilter;
-import com.example.autherjava.service.CustomEvaluatorService;
-import net.savantly.authorization.configuration.EnableRolePermissions;
-import net.savantly.authorization.service.PermissionAwareJwtAuthenticationConverter;
-import net.savantly.authorization.service.PermissionProvider;
+import com.example.autherjava.security.jwt.JwtFilter;
+import com.example.autherjava.utils.respon.CustomAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,8 +33,8 @@ public class SecurityConfig extends GlobalMethodSecurityConfiguration {
 //    public PermissionAwareJwtAuthenticationConverter jwtAuthenticationConverter(PermissionProvider permissionProvider) {
 //        return new PermissionAwareJwtAuthenticationConverter(permissionProvider);
 //    }
-@Autowired
-private CustomEvaluatorService permissionEvaluator;
+        @Autowired
+        private CustomEvaluatorPermisson permissionEvaluator;
         @Bean
         public PasswordEncoder passwordEncoder() {
             return new BCryptPasswordEncoder();
@@ -52,7 +48,7 @@ private CustomEvaluatorService permissionEvaluator;
     protected MethodSecurityExpressionHandler createExpressionHandler() {
         DefaultMethodSecurityExpressionHandler expressionHandler =
                 new DefaultMethodSecurityExpressionHandler();
-        expressionHandler.setPermissionEvaluator(new CustomEvaluatorService());
+        expressionHandler.setPermissionEvaluator(permissionEvaluator);
         return expressionHandler;
     }
 
@@ -65,7 +61,9 @@ private CustomEvaluatorService permissionEvaluator;
                     .antMatchers("/register","/login","/api/status","/**")
                     .permitAll()
                     .anyRequest()
-                    .authenticated();
+                    .authenticated()
+                    .and()
+                    .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
             http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
             http.headers().frameOptions().sameOrigin();
             return http.build();
@@ -75,10 +73,10 @@ private CustomEvaluatorService permissionEvaluator;
         public WebSecurityCustomizer webSecurityCustomizer() {
             return (web) -> web.ignoring().antMatchers("/images/**", "/js/**", "/webjars/**");
         }
-//    @Bean
-//    public AuthenticationEntryPoint authenticationEntryPoint(){
-//        return new CustomAuthenticationEntryPoint();
-//    }
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint(){
+        return new CustomAuthenticationEntryPoint();
+    }
 
     }
 

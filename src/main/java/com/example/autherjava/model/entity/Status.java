@@ -18,6 +18,6 @@ public class Status {
     private Integer id ;
     @Column
     private Integer level;
-    private String status ;
+    private String name ;
 
 }

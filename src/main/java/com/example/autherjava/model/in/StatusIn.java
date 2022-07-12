@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 public class StatusIn {
     private Integer id ;
-    private String status ;
+    private String name ;
     private Integer level ;
  private List<StatusIn> statusall ;
 

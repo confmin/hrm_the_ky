@@ -3,8 +3,13 @@ package com.example.autherjava.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -28,16 +33,17 @@ public class Account {
     private String verify_code ;
     private  boolean enable ;
 
-
-
-@ManyToMany(fetch = FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.FALSE)
+@ManyToMany(cascade = CascadeType.ALL)
 private Collection<Role> roles = new ArrayList<>();
 
 
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany( cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-@JoinTable(name = "accounts_premissions",joinColumns = {@JoinColumn(name = "id_accounts")},
-        inverseJoinColumns = {@JoinColumn(name = "id_permissions")})
-    private Collection<Permission> permissions ;
+    @JoinTable(name = "accounts_premissions",joinColumns = {@JoinColumn(name = "id_accounts")},
+        inverseJoinColumns = {@JoinColumn(name = "id_permissions", referencedColumnName = "id")})
+    private Collection<Permission> permissions = new ArrayList<>();
 }
 

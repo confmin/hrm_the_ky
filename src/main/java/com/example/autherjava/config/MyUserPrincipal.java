@@ -4,10 +4,10 @@ import com.example.autherjava.model.entity.Account;
 import com.example.autherjava.model.entity.Permission;
 import com.example.autherjava.model.entity.Role;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -24,14 +24,42 @@ public class MyUserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        return getAuthorities(account.getRoles());
+
+}
+    private Collection<? extends GrantedAuthority> getAuthorities(
+            Collection<Role> roles) {
+        return getGrantedAuthorities(getPremissiontoRole(roles));
+    }
+
+    private List<String> getPremissiontoRole(Collection<Role> roles) {
+
+        List<String> perrmisson = new ArrayList<>();
+        List<Permission> collection = new ArrayList<>();
+        for (Role role : roles) {
+            perrmisson.add(role.getName());
+            collection.addAll(role.getPermissions());
+        }
+        for (Permission item : collection) {
+            perrmisson.add(item.getName());
+        }
+        return perrmisson;
+    }
+
+    private List<GrantedAuthority> getGrantedAuthorities(List<String> permission) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (String per : permission) {
+            authorities.add(new SimpleGrantedAuthority(per));
+        }
         for (Permission privilege : account.getPermissions()) {
             authorities.add(new SimpleGrantedAuthority(privilege.getName()));
         }
-        log.info("permisson"+authorities);
+
+        log.info("co nhung quyen gi nao"+authorities);
         return authorities;
 
-}
+    }
+
 
     @Override
     public String getPassword() {
@@ -62,33 +90,7 @@ public class MyUserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return account.isEnable();
     }
-//    private Collection<? extends GrantedAuthority> getAuthorities(
-//            Collection<Role> roles) {
-//        return getGrantedAuthorities(getPremission(roles));
-//    }
-//
-//    private List<String> getPremission(Collection<Role> roles) {
-//
-//        List<String> perrmisson = new ArrayList<>();
-//        List<Permission> collection = new ArrayList<>();
-//        for (Role role : roles) {
-//            perrmisson.add(role.getName());
-//            collection.addAll(role.getPermissions());
-//        }
-//        for (Permission item : collection) {
-//            perrmisson.add(item.getName());
-//        }
-//        return perrmisson;
-//    }
-//
-//    private List<GrantedAuthority> getGrantedAuthorities(List<String> permission) {
-//        List<GrantedAuthority> authorities = new ArrayList<>();
-//        for (String per : permission) {
-//            authorities.add(new SimpleGrantedAuthority(per));
-//        }
-//        log.info("quyen"+authorities);
-//        return authorities;
-//
-//    }
+
+
 
 }

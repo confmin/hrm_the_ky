@@ -4,15 +4,13 @@ package com.example.autherjava.controller;
 import com.example.autherjava.model.dto.UserDto;
 import com.example.autherjava.model.entity.User;
 import com.example.autherjava.model.in.UserIn;
-import com.example.autherjava.respon.ResponPage;
-import com.example.autherjava.service.UserService;
+import com.example.autherjava.utils.respon.ResponPage;
+import com.example.autherjava.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Map;
 

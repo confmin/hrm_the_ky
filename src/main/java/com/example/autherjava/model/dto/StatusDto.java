@@ -15,6 +15,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class StatusDto {
     private Integer id ;
-    private String status ;
+    private String name ;
     private  Integer level ;
 }
