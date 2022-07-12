@@ -19,7 +19,6 @@ public class StatusMapper {
     }
     public static Status map(StatusIn statusIn)
     {
-        StatusMapper cc = new StatusMapper();
 
         Status  status = new Status();
 
