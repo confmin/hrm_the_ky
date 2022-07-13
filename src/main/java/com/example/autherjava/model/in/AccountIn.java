@@ -1,11 +1,15 @@
 package com.example.autherjava.model.in;
 
 import com.example.autherjava.model.entity.Role;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Collection;
 
-@Data
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class AccountIn {
     private String username ;
     private String email ;

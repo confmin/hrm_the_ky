@@ -40,11 +40,6 @@ public class CustomEvaluatorPermisson implements PermissionEvaluator {
                     String.valueOf(grantedAuth.getAuthority()).contains(permission)) {
                 return true;
             }
-            log.error("dd"+String.valueOf(grantedAuth.getAuthority()).contains(permission));
-            log.info("dm ca1y "+ grantedAuth.getAuthority());
-            log.info("dm cay2 "+targetType);
-            log.info("dm cay 3"+ grantedAuth.getAuthority().startsWith(targetType));
-
         }
         log.error("sai cmnr ");
         return false;

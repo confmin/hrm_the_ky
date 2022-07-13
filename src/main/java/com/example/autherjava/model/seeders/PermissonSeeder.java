@@ -25,7 +25,7 @@ public class PermissonSeeder {
     @PostConstruct
     public void run()
     {
-       // init_permisson();
+//       init_permisson();
     }
     public void init_permisson() {
 

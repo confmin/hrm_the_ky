@@ -21,6 +21,7 @@ String PATH_STATUS = PATH_DEFAULT+"status/";
         String GET_ALL = PATH_STATUS+"getall";
         String CREATE = PATH_STATUS+"create";
         String UPDATE = PATH_STATUS+"update";
+        String DELETE = PATH_STATUS+"delete";
         String UPDATE_ALL = PATH_STATUS+"update_all";
     }
 }

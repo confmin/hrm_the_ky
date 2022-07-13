@@ -29,21 +29,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends GlobalMethodSecurityConfiguration {
     @Autowired
     private JwtFilter jwtFilter;
-//    @Bean
-//    public PermissionAwareJwtAuthenticationConverter jwtAuthenticationConverter(PermissionProvider permissionProvider) {
-//        return new PermissionAwareJwtAuthenticationConverter(permissionProvider);
-//    }
         @Autowired
         private CustomEvaluatorPermisson permissionEvaluator;
         @Bean
         public PasswordEncoder passwordEncoder() {
             return new BCryptPasswordEncoder();
         }
-        @Bean
-        public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-                throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+
+@Bean
+public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    return authenticationConfiguration.getAuthenticationManager();
+}
     @Override
     protected MethodSecurityExpressionHandler createExpressionHandler() {
         DefaultMethodSecurityExpressionHandler expressionHandler =
@@ -58,7 +54,7 @@ public class SecurityConfig extends GlobalMethodSecurityConfiguration {
             http.cors().disable();
             http.csrf().disable();
             http.authorizeRequests()
-                    .antMatchers("/register","/login","/api/status","/**")
+                    .antMatchers("/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated()

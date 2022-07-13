@@ -1,7 +1,7 @@
 package com.example.autherjava.security.jwt;
 
+
 import com.example.autherjava.config.UserDetailsServiceImp;
-import com.example.autherjava.service.account.AccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +22,8 @@ import java.io.IOException;
 public class JwtFilter  extends OncePerRequestFilter {
     @Autowired
     private JwtUtility jwtUtility;
+    @Autowired
+    UserDetailsServiceImp userDetailsServiceImp ;
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -32,7 +34,7 @@ public class JwtFilter  extends OncePerRequestFilter {
             if(jwt != null && jwtUtility.validateJwtToken(jwt))
             {
                 String email = jwtUtility.getEmailFromJwtToken(jwt);
-                UserDetails userDetails = new UserDetailsServiceImp().loadUserByUsername(email);
+                UserDetails userDetails = userDetailsServiceImp.loadUserByUsername(email);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails,null,userDetails.getAuthorities()
                 );
@@ -41,7 +43,7 @@ public class JwtFilter  extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
-            logger.error("Cannot set user authentication: {}", e);
+            log.error("Cannot set user authentication: {}", e);
         }
         filterChain.doFilter(request,response);
     }

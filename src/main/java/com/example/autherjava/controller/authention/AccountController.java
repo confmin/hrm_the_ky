@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URISyntaxException;
 
 @RestController
-@RequestMapping("")
 @CrossOrigin(origins = "*",allowedHeaders = "*")
 public class AccountController {
 

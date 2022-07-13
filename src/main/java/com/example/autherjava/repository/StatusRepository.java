@@ -17,7 +17,7 @@ public interface StatusRepository extends JpaRepository<Status,Integer> {
     Status getById(Integer id);
     @Query(value = "SELECT statuses.level from users join statuses on statuses.id = users.status_id WHERE users.status_id = ?1 limit 1",nativeQuery = true)
     Integer getByLevel(Integer level) ;
-    @Query(value = "select e from Status  e where e.status=?1")
+    @Query(value = "select e from Status  e where e.name=?1")
     Optional<Status> getName(String name );
     @Query(value = "select e from Status e where e.level =?1")
     Optional<Status> getLevel(Integer id );

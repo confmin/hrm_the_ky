@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@ToString
 public class ResponAccount {
 private boolean status ;
 private String message ;

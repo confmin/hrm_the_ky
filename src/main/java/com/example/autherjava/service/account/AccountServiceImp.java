@@ -19,6 +19,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Component;
@@ -35,11 +37,9 @@ import java.util.*;
 @Component
 public class AccountServiceImp implements AccountService {
     private static BCryptPasswordEncoder passwordEcorder = new BCryptPasswordEncoder();
-    private Account account  ;
-
     @Autowired
     AccountRepository accountRepository;
-    @Autowired
+   @Autowired
     AuthenticationManager authenticationManager ;
     @Autowired
     PermissionRepository permissionRepository ;
@@ -80,12 +80,12 @@ public class AccountServiceImp implements AccountService {
 
     @Override
     public ResponAccount logout(HttpServletRequest request, HttpServletResponse response) {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
 
             String username = auth.getName();
             otp_service.clearOTP(username);
-            account.setEnable(false);
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return new ResponAccount(true,ServiceConstant.Account.LOGOUT_SUCCESS,null);
@@ -112,7 +112,7 @@ public class AccountServiceImp implements AccountService {
         else {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(accountIn.getEmail()
-                            , accountIn.getPassword()));
+                            ,accountIn.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String otp = String.valueOf(otp_service.generateOTP(authentication.getName()));
             account.setVerify_code(otp);
@@ -122,7 +122,6 @@ public class AccountServiceImp implements AccountService {
             return new ResponAccount(true, ServiceConstant.OTP.INPUT, null);
         }
     }
-
     @Override
     public Boolean doPasswordsMatch(String rawPwd, String encode) {
 

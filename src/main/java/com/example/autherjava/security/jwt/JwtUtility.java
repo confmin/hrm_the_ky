@@ -17,7 +17,6 @@ import java.util.Date;
 public class JwtUtility implements Serializable {
 //    private static final Logger logger = LoggerFactory.getLogger(JwtUtility.class);
 //    static final String AUTHORITIES_KEY = "scopes";
-
     private String jwtSecret = "secretkey";
     public String generateJwtToken(String email ) {
         return Jwts.builder()
@@ -36,18 +35,18 @@ public class JwtUtility implements Serializable {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         }catch (SignatureException e) {
-          ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Token khong hop le: "+ e.getMessage());
+//          ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Token khong hop le: "+ e.getMessage());
             log.error("Invalid JWT signature: {}", e.getMessage());
         } catch (MalformedJwtException e) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Token khong dung: "+ e.getMessage());
+//            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Token khong dung: "+ e.getMessage());
         } catch (ExpiredJwtException e) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Token da het han: "+ e.getMessage());
+//            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Token da het han: "+ e.getMessage());
             log.error("JWT token is expired: {}", e.getMessage());
         } catch (UnsupportedJwtException e) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Token khong duoc ho tro: "+ e.getMessage());
+//            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Token khong duoc ho tro: "+ e.getMessage());
             log.error("JWT token is unsupported: {}", e.getMessage());
         } catch (IllegalArgumentException e) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Chuoi xac nhan quyen so huu trong: "+ e.getMessage());
+//            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Chuoi xac nhan quyen so huu trong: "+ e.getMessage());
             log.error("JWT claims string is empty: {}", e.getMessage());
         }
         return false;
