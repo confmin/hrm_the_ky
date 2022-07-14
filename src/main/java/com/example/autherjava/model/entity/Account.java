@@ -34,12 +34,11 @@ public class Account {
     private  boolean enable ;
 
     @LazyCollection(LazyCollectionOption.FALSE)
-@ManyToMany(cascade = CascadeType.ALL)
+@ManyToMany()
 private Collection<Role> roles = new ArrayList<>();
 
-
     @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany( cascade = CascadeType.ALL)
+    @ManyToMany( cascade = CascadeType.PERSIST)
     @JoinTable(name = "accounts_premissions",joinColumns = {@JoinColumn(name = "id_accounts")},
         inverseJoinColumns = {@JoinColumn(name = "id_permissions")})
     private Collection<Permission> permissions = new ArrayList<>();

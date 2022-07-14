@@ -32,5 +32,13 @@ interface Status {
     String UPDATE_SUCCESS ="Update thanh cong";
 
 }
+interface Role {
+    String NAME_EXIST = "Role nay da ton tai tren he thong";
+    String SUSSCESS = "Them role thanh cong";
+    String HAVE_ROLE_NAME = "He thong tu them tien to ROLE, chi nhap ten role";
+    String ID_NOT_EXIST = "ID nay khong ton tai";
+    String UPDATE_SUCCESS ="Update role thanh cong";
+    String DELETE_SUCCESS ="Xoa role thanh cong";
+}
 }
 

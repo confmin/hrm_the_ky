@@ -3,6 +3,8 @@ package com.example.autherjava.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,8 +27,11 @@ public class Role  {
     private Integer id ;
     @Column
     private String name ;
-
-    @ManyToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(mappedBy = "roles",cascade = {CascadeType.PERSIST})
+    Collection<Account> accounts ;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany( cascade = {CascadeType.PERSIST})
     @JoinTable(name ="roles_permissions", joinColumns = {@JoinColumn(name ="id_role")},
     inverseJoinColumns = {@JoinColumn(name = "id_permission")})
     private Collection<Permission> permissions ;

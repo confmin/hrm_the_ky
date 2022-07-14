@@ -1,5 +1,7 @@
 package com.example.autherjava.utils.constants;
 
+import org.springframework.security.core.parameters.P;
+
 public interface ControllerConstant {
     String PATH_DEFAULT ="/api/v1/";
 
@@ -20,8 +22,16 @@ String PATH_STATUS = PATH_DEFAULT+"status/";
     interface STATUS {
         String GET_ALL = PATH_STATUS+"getall";
         String CREATE = PATH_STATUS+"create";
-        String UPDATE = PATH_STATUS+"update";
-        String DELETE = PATH_STATUS+"delete";
-        String UPDATE_ALL = PATH_STATUS+"update_all";
+        String UPDATE = PATH_STATUS+"update/{id}";
+        String DELETE = PATH_STATUS+"delete/{id}";
+        String UPDATE_ALL = PATH_STATUS+"update_all/{id}";
+
+    }
+    String PATH_ROLE = PATH_DEFAULT+"role/";
+    interface ROLE {
+        String CREATE = PATH_ROLE+"create" ;
+        String GET = PATH_ROLE+"get";
+        String UPDATE =PATH_ROLE+"update/{id}";
+        String DELETE = PATH_ROLE+"delete/{id}";
     }
 }
