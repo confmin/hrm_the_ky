@@ -33,9 +33,10 @@ public class Account {
     private String verify_code ;
     private  boolean enable ;
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-@ManyToMany()
+
+@ManyToMany(mappedBy = "accounts")
 private Collection<Role> roles = new ArrayList<>();
+
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany( cascade = CascadeType.PERSIST)

@@ -28,7 +28,9 @@ public class Role  {
     @Column
     private String name ;
     @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany(mappedBy = "roles",cascade = {CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.PERSIST})
+    @JoinTable(name ="accounts_roles", joinColumns = {@JoinColumn(name ="id_accounts")},
+            inverseJoinColumns = {@JoinColumn(name = "id_roles")})
     Collection<Account> accounts ;
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany( cascade = {CascadeType.PERSIST})
